@@ -162,7 +162,7 @@ void TCPServer::closeServer()
 
 void handleClient(int client_socket)
 {
-	static std::atomic<int> message_counter(1);  // 消息编号计数器
+	static std::atomic<int> message_counter(0);  // 消息编号计数器
 
 	char buffer[BUFFER_SIZE] = { 0 };
 	int bytesRead = read(client_socket, buffer, BUFFER_SIZE);
@@ -170,7 +170,7 @@ void handleClient(int client_socket)
 	if (bytesRead > 0)
 	{
 		// 获取消息编号
-		int message_id = message_counter++;
+		int message_id = ++message_counter;
 
 		// 输出接收到的原始数据和消息编号
 		std::cout << "(#" << message_id << ") Received message from client: " << std::string(buffer, bytesRead) << std::endl;
